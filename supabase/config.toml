@@ -1,0 +1,6 @@
+project_id = "vpsikmgnhubkydftahdl"
+
+# La plataforma rechaza con 401 cualquier llamada sin un JWT válido antes de ejecutar la función.
+# La función además exige el rol "authenticated" (ver rolDelToken en gemini-proxy/index.ts).
+[functions.gemini-proxy]
+verify_jwt = true

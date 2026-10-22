@@ -1,0 +1,16 @@
+{
+  // Solo comprobación de tipos (npm run typecheck): Vite compila la app y tsx ejecuta las pruebas.
+  // Los componentes .jsx y las APIs .js no se revisan; datosProyecto.js tiene sus tipos en datosProyecto.d.ts.
+  "compilerOptions": {
+    "strict": true,
+    "noEmit": true,
+    "target": "ES2022",
+    "lib": ["ES2022", "DOM"],
+    "module": "ESNext",
+    "moduleResolution": "bundler",
+    "allowImportingTsExtensions": true,
+    "skipLibCheck": true,
+    "types": ["node"]
+  },
+  "include": ["src/lib/**/*.ts", "tests/**/*.ts", "supabase/functions/_shared/**/*.ts"]
+}

@@ -1,0 +1,39 @@
+{
+  "name": "auragrid-optimization",
+  "version": "1.0.0",
+  "description": "Desarrollo de parques solares en México hasta RTB: entregables, garantías, modelo financiero y asistente",
+  "private": true,
+  "scripts": {
+    "dev": "vite",
+    "build": "vite build",
+    "typecheck": "tsc -p tsconfig.json",
+    "respaldo": "node scripts/respaldo.mjs",
+    "test": "tsx --test tests/reglas.test.ts tests/rentabilidad.test.ts tests/proyectos-nuevos.test.ts tests/cronograma.test.ts tests/historial.test.ts tests/avance.test.ts tests/historialCambios.test.ts tests/exportar.test.ts tests/verificarCifras.test.ts tests/oportunidades.test.ts tests/obraYCalendario.test.ts tests/garantiasPorTipo.test.ts tests/recursoSolar.test.ts tests/renombrar.test.ts tests/archivos.test.ts tests/rolesYEvidencia.test.ts tests/permisos.test.ts tests/evidenciaGarantias.test.ts tests/exportarFinanzas.test.ts tests/depreciacionCategorias.test.ts tests/iva.test.ts tests/portafolio.test.ts tests/modulos.test.ts tests/ivaPantallas.test.ts tests/ivaExcel.test.ts tests/creditos.test.ts tests/creditosPantallas.test.ts tests/creditosExcel.test.ts tests/escenarios.test.ts tests/riesgos.test.ts tests/escenariosPantallas.test.ts tests/seguridad.test.ts tests/publicacion.test.ts tests/correccionCreditos.test.ts tests/robustez.test.ts tests/respaldo.test.ts tests/estadosFinancieros.test.ts tests/estadosPantallas.test.ts tests/estadosExcel.test.ts tests/cors.test.ts tests/eliminarProyecto.test.ts tests/limpiezaPrototipo.test.ts"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "UNLICENSED",
+  "dependencies": {
+    "@supabase/supabase-js": "^2.117.2",
+    "@vercel/analytics": "^2.0.1",
+    "docx": "^9.8.1",
+    "exceljs": "4.4.0",
+    "jspdf": "^4.2.1",
+    "react": "^19.3.0",
+    "react-dom": "^19.3.0",
+    "react-markdown": "10.1.0",
+    "react-router-dom": "7.18.4",
+    "remark-gfm": "4.0.1"
+  },
+  "devDependencies": {
+    "@types/node": "24.19.2",
+    "tsx": "4.23.15",
+    "typescript": "5.9.3",
+    "vite": "^8.3.3"
+  },
+  "overrides": {
+    "exceljs": {
+      "uuid": "11.1.1"
+    }
+  }
+}
