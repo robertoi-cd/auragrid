@@ -1,0 +1,5 @@
+{
+  // Deno solo para las Edge Functions de Supabase; el resto (src/, Vite) sigue con el TypeScript de VS Code
+  "deno.enablePaths": ["supabase/functions"],
+  "deno.lint": true
+}

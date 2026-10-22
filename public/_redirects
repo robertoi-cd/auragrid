@@ -1,0 +1,3 @@
+# Netlify: todas las rutas de la app (p. ej. /proyectos/alpha-i-50mw/resumen) las resuelve React Router en index.html.
+# Los archivos que existen (assets) se sirven primero; esta regla solo aplica a lo demás.
+/*    /index.html   200

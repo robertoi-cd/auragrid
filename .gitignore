@@ -1,0 +1,22 @@
+# Dependencias
+node_modules/
+
+# Variables de entorno y secretos (la clave de Gemini vive solo en los secretos de Supabase)
+.env
+.env.*
+!.env.example
+
+# Estado local de la CLI de Supabase (proyecto enlazado, versión de la CLI)
+.temp/
+supabase/.temp/
+
+# Builds y registros
+dist/
+*.log
+
+# Respaldos de datos (contienen datos de proyectos y correos) y la clave secreta del respaldo (npm run respaldo)
+respaldos/
+.env.respaldo
+
+# Excel exportados para revisión (no se versionan)
+capturas/**/*.xlsx
