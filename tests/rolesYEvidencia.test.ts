@@ -152,9 +152,15 @@ describe('Ajuste 2: 429 de Google y reinicio alineado con la cuota de Google', (
   test('gemini-proxy devuelve la consulta en cualquier fallo de Gemini, incluido el 429', () => {
     const proxy = leer('supabase/functions/gemini-proxy/index.ts');
     const capturado = proxy.slice(proxy.indexOf('} catch (error) {', proxy.indexOf('replyText')));
-    // Toda salida por error devuelve la consulta, y devolverConsulta llama a liberar_consulta_asistente
+    // Toda salida por error intenta devolver la consulta mediante una RPC exclusiva del servidor.
     assert.match(capturado, /const seDevolvio = usoId \? await devolverConsulta\(\) : true/);
-    assert.match(proxy, /const devolverConsulta = async[\s\S]*?rpcConSesion\('liberar_consulta_asistente'/);
+    assert.match(proxy, /const devolverConsulta = async[\s\S]*?devolverConsultaServidor\(usoId, autorizacion\)/);
+    assert.match(proxy, /fetch\(`\$\{url\}\/auth\/v1\/user`/);
+    assert.match(proxy, /Authorization: autorizacion/);
+    assert.match(proxy, /fetch\(`\$\{url\}\/rest\/v1\/rpc\/liberar_consulta_asistente_servidor`/);
+    assert.match(proxy, /Authorization: `Bearer \$\{serviceKey\}`/);
+    assert.match(proxy, /body: JSON\.stringify\(\{ p_uso_id: usoId, p_user_id: usuario\.id \}\)/);
+    assert.doesNotMatch(proxy, /rpcConSesion\('liberar_consulta_asistente'/);
     assert.match(proxy, /porMinuto \? 'limite_minuto' : 'cuota_google'/);
   });
 });
@@ -198,7 +204,7 @@ describe('Fallos del servicio de IA: la consulta se devuelve y el contador no se
     const chat = fs.readFileSync('src/AiAssistantChat.jsx', 'utf8');
     const proxy = fs.readFileSync('supabase/functions/gemini-proxy/index.ts', 'utf8');
     const navegador = Number(chat.match(/setTimeout\(\(\) => controller\.abort\(\), (\d+)\)/)![1]);
-    const servidor = Number(proxy.match(/GEMINI_PRESUPUESTO_MS'\)\) \|\| ([\d_]+)/)![1].replace(/_/g, ''));
+    const servidor = Number(proxy.match(/GEMINI_PRESUPUESTO_MS'\)\)\s*\|\|\s*([\d_]+)/)![1].replace(/_/g, ''));
     assert.equal(navegador, 60_000);
     assert.equal(servidor, 45_000);
     // Margen para reservar el cupo, armar el contexto, devolver la consulta y la red
@@ -207,7 +213,7 @@ describe('Fallos del servicio de IA: la consulta se devuelve y el contador no se
   test('gemini-proxy nunca pasa el texto de Google al usuario', () => {
     const proxy = fs.readFileSync('supabase/functions/gemini-proxy/index.ts', 'utf8');
     assert.doesNotMatch(proxy, /throw new Error\(data\.error\?\.message/);
-    assert.match(proxy, /El servicio de IA está saturado\. Intenta en unos minutos\{devuelta\}/);
+    assert.match(proxy, /ia_saturada:\s*\{[^\n]*texto:\s*'El servicio de IA está saturado\. Intenta en unos minutos\{devuelta\}'/);
   });
   test('título del chat: "Tu conversación sobre <proyecto>"', () => {
     const chat = fs.readFileSync('src/AiAssistantChat.jsx', 'utf8');
